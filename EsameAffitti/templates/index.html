@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{%block aside%}
+    {% if current_user.is_authenticated %}
+    <div class="presentazioneProfilo">
+        {% if current_user.imgProfilo == '' %}
+        <img class="fotoprofilo" src="{{ url_for('static', filename = 'user.jpg' ) }}" alt="Questa è l'immagine profilo">
+        {% else %}
+        <img class="fotoprofilo" src="{{ url_for('static', filename = current_user.imgProfilo ) }}" alt="Questa è l'immagine profilo">
+        {%endif%}
+        <h2 class="pt-3">Ciao {{ current_user.nome }}!</h2>
+    </div>
+    {%if current_user.isLocatore == 0 %}
+    <button class="bottoneLogin row mx-1"><a href="{{url_for('profiloCliente', id = current_user.id)}}" class="text-decoration-none text-reset">Vai al mio profilo</a></button>  
+    {%else%}
+    <button class="bottoneLogin row mx-1"><a href="{{url_for('profiloLocatore', id = current_user.id, filtro = 00)}}" class="text-decoration-none text-reset">Vai al mio profilo</a></button>
+    {%endif%}
+    <button class="bottoneLogin row my-2 mx-1"><a href="{{url_for('logout')}}" class="text-decoration-none text-reset">Logout</a></button>
+    {% if current_user.isLocatore == 1 %}
+    <section>
+        <h6 class="pt-4 ps-2 titolo"><a class="text-reset " data-bs-toggle="collapse" href="#collapseAnnuncio" aria-expanded="false" aria-controls="collapseAnnuncio">Aggiungi un annuncio</a> <span class="badge bg-secondary">Click!</span></h6>
+        <article class="aggiungiAnnuncio rounded collapse" id="collapseAnnuncio">
+            <form action="{{url_for('new_annuncio', id_locatore = current_user.id)}}" method="POST" id="formAnnuncio" enctype="multipart/form-data" tabindex="-1">
+                <div class="mb-2">
+                    <label for="titoloText" class="form-label">Titolo:</label>
+                    <input type="text" class="form-control" id="titoloText" name="titolo" required>
+                </div>
+                <div class="mb-3">
+                    <label for="titoloText" class="form-label">Indirizzo:</label>
+                    <input type="text" class="form-control" id="titoloText" name="indirizzo" required>
+                </div>
+                <div class="mb-3">
+                    <label for="descrizioneText" class="form-label">Una breve descrizione:</label>
+                    <textarea class="form-control" id="descrizioneText" name="descrizione" rows="4" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="tipoCasaSelect" class="form-label">Seleziona il tipo di immobile:</label>
+                    <select class="form-select" id="tipoCasaSelect" name="tipoCasa" aria-label="Default select example">
+                        <option value="1">Casa indipendente</option>
+                        <option value="2">Appartamento</option>
+                        <option value="3">Loft</option>
+                        <option value="4">Villa</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="numLocaliSelect" class="form-label">Seleziona il numero di locali:</label>
+                    <select class="form-select" id="numLocaliSelect" name="numLocali" aria-label="Default select example">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5+</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="primaFotoFile" class="form-label">La foto principale del tuo annuncio:</label>
+                    <input class="form-control" type="file" id="primaFotoFile" name="url1" accept=".jpg, .jpeg, .png" required>
+                  </div>
+                <div class="mb-3">
+                    <label for="fotoFile" class="form-label">Da 1 a 4 altre foto dell'annuncio:</label>
+                    <input class="form-control" type="file" id="fotoFile" name="fotoSecondarie" accept=".jpg, .jpeg, .png" multiple>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" id="arredataCheck" name="isArredata">
+                    <label class="form-check-label" for="arredataCheck">
+                      Già arredato
+                    </label>
+                  </div>
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="1" id="disponibileCheck" name="isDisponibile" checked>
+                    <label class="form-check-label" for="disponibileCheck">
+                      Subito disponibile
+                    </label>
+                  </div>
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="prezzoText" name="prezzo" placeholder="Prezzo al mese" required>
+                        <label for="prezzoText">Prezzo al mese</label>
+                    </div>
+                    <span class="input-group-text">€/mese</span>
+                </div>
+                <button type="submit" class="bottoneLogin">Carica</button>
+                <button type="reset" class="bottoneLogin">Cancella</button>
+            </form>
+        </article>
+    </section>
+    {%endif%}
+    {% else %}
+    <h5>Hai un account?</h5>
+    <button class="bottoneLogin" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogin" aria-expanded="false" aria-controls="collapseLogin">
+        LOGIN
+    </button>
+    <form action="{{url_for('login')}}" method="POST" id="collapseLogin" class="collapse py-3">
+        <div class="form-floating mb-2">
+            <input type="email" class="form-control" id="emailText" name="email" placeholder="name@example.com">
+            <label for="emailText">Email</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="passwordText" name="password" placeholder="Password">
+            <label for="passwordText">Password</label>
+        </div>
+        <button type="submit" class="bottoneLogin mt-2">Accedi</button>
+    </form>
+
+    <h5 class="pt-3">Non hai ancora un account?</h4>
+    <button class="bottoneLogin" data-bs-toggle="modal" data-bs-target="#modalRegistrati">
+        REGISTRATI
+    </button>
+    <form action="{{url_for('signup')}}" method="post" class="modal fade" id="modalRegistrati" enctype="multipart/form-data" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Registrati</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Nome e cognome</span>
+                <input type="text" name="nome" id="nomeText" class="form-control" required>
+                <input type="text" name="cognome" id="CognomeText" class="form-control" required>
+            </div>
+            <label for="emailInput" class="form-label">Email</label>
+            <input type="email" class="form-control mb-2" name="email" id="emailInput" required>
+            <label for="passwordInput" class="form-label">Password</label>
+            <input type="password" name="password" id="passwordInput" class="form-control" required>
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="radio" name="isLocatore" id="clienteCheck" value="0" checked>
+                <label class="form-check-label" for="clienteCheck">Sono un cliente</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="isLocatore" id="locatoreCheck" value="1">
+                <label class="form-check-label" for="locatoreCheck">Sono un locatore</label>
+            </div>
+            <div class="form-check form-switch mt-2 mb-3">
+                <input class="form-check-input" type="checkbox" role="switch" name="isProfessionista" id="professionistaSwitch" value="1">
+                <label class="form-check-label" for="professionistaSwitch">Sono un professionista</label>
+            </div>
+            <div class="row">
+                <label for="fileFoto" class="form-label col-md-12">Inserisci una foto profilo</label>
+                <input type="file" id="fileFoto" name="imgProfilo" accept=".jpg, .jpeg, .png" />
+            </div>
+            <div class="row my-3">
+                <label for="datePost" class="col-md-12">Seleziona la tua data di nascita</label>
+                <input type="date" class="col" id="datePost" name="dataNascita">
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancella</button>
+            <button type="submit" class="btn btn-primary">Carica</button>
+        </div>
+    </div>
+    </div>
+    </form>
+    {%endif%}
+{%endblock%}
+{%block corpo%}
+{%if filtro == 0%}
+<div class="row ps-2">
+    <h5 class="col-8">Annunci per prezzo decrescente</h5>
+    <button class="bottoneLogin ms-5 col-3"><a class="text-decoration-none text-reset" href="{{url_for('home')}}">Ordina per numero di locali</a></button>
+</div>
+{%endif%}
+{%if filtro == 1%}
+<div class="row ps-2">
+    <h5 class="col-8">Annunci per numero locali crescente</h5>
+    <button class="bottoneLogin ms-5 col-3"><a class="text-decoration-none text-reset" href="{{url_for('index')}}">Ordina per prezzo</a></button>
+</div>
+{%endif%}
+{% for annuncio in annunci %}
+<div class="annuncio card mb-4">
+    <div class="row bg-transparent">
+        <div class="col-lg-4 col-sm-12 p-2">
+            <img src="{{ url_for('static', filename = annuncio.url1 ) }}" class="imgAnnuncio" alt="foto principale dell'annuncio">
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <a class="stretched-link" href="{{url_for('show_annuncio', id = annuncio.id_annuncio, giorno = 'null' )}}"></a>
+                <h4 class="card-title fs-2">{{annuncio.titolo}}</h4>
+                <p class="card-text fst-italic fs-5">{{annuncio.indirizzo}}</p>
+                <p class="pt-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-1x2" viewBox="0 0 16 16">
+                    <path d="M6 1H1v14h5zm9 0h-5v5h5zm0 9v5h-5v-5zM0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1zm1 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1z"/>
+                  </svg><small class="text-body-secondary"> Numero di locali: 
+                    {%if annuncio.numLocali < 5 %}
+                    <span class="badge text-bg-secondary"> {{annuncio.numLocali}}</span>
+                    {%else%}
+                    <span class="badge text-bg-secondary"> 5+</span>
+                    {%endif%}
+                </small></p>
+                <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+                  </svg> <small class="text-body-secondary">{{annuncio.tipoCasa}}</small></p>
+                <p class="prezzoAnnuncio"><strong class="fs-2">{{annuncio.prezzo}}</strong> € al mese</p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}
+{%endblock%}

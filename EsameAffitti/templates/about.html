@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{%block aside%}
+<h4 class="titolo">Qualcosa su di me...</h4>
+<div class="row pt-2">
+    <img class="col-sm-12 col-lg-5 mb-2" src="{{ url_for('static', filename = 'EliaAbout.jpg' ) }}">
+    <h6 class="col">Questo sono io, Racca Elia, il creatore di questo sito per affitti.</h6>
+    <p class="mt-2">Studio al Politecnico di Torino per il terzo anno ad Ingegneria Gestionale classe L-8.</p>
+</div>
+{%endblock%}
+{%block corpo%}
+<h4 class="titolo ms-2">...e qualcosa su questo sito</h4>
+<section class="testoGiustificato row ms-2">  
+    <p>Questo sito è stato creato per permettere alle persone di trovare o vendere casa a seconda delle proprie esigenze. Offre, infatti, la possibilità di cercare e selezionare diversi annunci di affitti ed eventualmente di prenotare una visita. Dal lato del locatore, invece, permette di pubblicare un annuncio riguardante la propria soluzione abitativa e di accettare o rifiutare eventuali richieste di visite. Il contratto di affitto non è ancora previsto direttamente sul sito, ma cercheremo di evolverci col tempo...</p>
+    <p>Il sito è stato creato usando HTML5, CSS e Bootstrap per la componente grafica; mentre il backend è regolato da Flask, Jinja e SQL (SQLite).</p>
+    <p>Le fonti che mi hanno dato ispirazione durante la creazione sono:</p>
+    <ul>
+        <li>Il corso di <a href="https://elite.polito.it/teaching/01dxu-iaw/">IAW</a> del Politecnico di Torino per tutta l'impostazione e l'esecuzione del codice</li>
+        <li><a href="https://www.soloaffitti.it/">SoloAffitti.it</a> per il concept di "card" nella pagina iniziale</li>
+        <li><a href="https://roomlessrent.com/it">Roomless.com</a> per i badge nella visualizzazione di un annuncio</li>
+        <li><a href="https://www.immobiliare.it/">Immobiliare.it</a> per l'idea di icone negli annunci</li>
+        <li><a href="http://colorsafe.co/">Colorsafe.co</a> per il colore principale e secondario</li>
+        <li><a href="https://www.gloriaingrassia.com/colori-sito-web/">GloriaInGrassia.com</a> per il colore terziario e la psicologia dei colori</li>
+    </ul>
+</section>
+{%endblock%}

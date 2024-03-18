@@ -1,0 +1,72 @@
+Utenti e credenziali:
+
+LOCATORI
+Nome e cognome: Elia Racca
+Email: elia.racca02@gmail.com
+Password: elia
+(professionista)
+
+Nome e cognome: Conte Cagliostro
+Email: ilConteDiCagliostro@gmail.stataclunch
+Password: conte
+
+CLIENTI
+Nome e cognome: Pinuccio Scarpetta
+Email: pinScar@gmail.com
+Password: pinscar
+(professionista)
+
+Nome e cognome: Magnus Carlsen
+Email: magnus@carlsen.no
+Password: carlsen
+
+-------------------------------------------------------------------------------------------------------
+Pagine del sito:
+
+Base: 	tutte le pagine hanno il seguente schema: 
+	un header con scorciatoie sempre disponibili per la pagina Home e About
+	un corpo con un sezione aside e una sezione principale
+	un footer
+
+Home/aside:	se non loggati ci si può loggare o registrare.
+		se loggati e clienti si può andare alla pagina del proprio profilo o fare logout
+		se loggati e locatori si può andare alla pagina del proprio profilo, creare un annuncio o fare logout
+
+Home/principale:	chiunque vede gli annunci disponibili ordinati per prezzo o numero locali e può cliccare su un annuncio per accedere alla pagina completa dell'annuncio
+
+Annuncio/aside:	se non loggati ci si può loggare o registrare.
+		se loggati e proprietari dell'annuncio si può andare alla pagina di modifica dell'annuncio
+		se loggati, non proprietari dell'annuncio e senza prenotazione accettata o richiesta per tale annuncio si può richiedere una visita
+		se loggati, non proprietari dell'annuncio e con una prenotazione richiesta o accettata per tale annuncio s può andare a vedere tale visita nella pagina del proprio profilo
+
+Annuncio/principale:	chiunque vede tutte le caratteristiche dell'annuncio
+
+ProfiloCliente/aside:	si vedono le informazioni del proprio profilo e lo si può modificare tramite il bottone
+
+ProfiloCliente/principale:	si vedono le prenotazioni fatte per tutti gli annunci
+
+ProfiloLocatore/aside:	si vedono le  informazioni del proprio profilo e lo si può modificare tramite il bottone oppure creare un nuovo annuncio
+
+ProfiloLocatore/principale:	si hanno 4 sezioni navigabili tramite bottoni:
+				Una per gli annunci disponibili creati
+				Una per gli annunci non disponibili creati
+				Una per le prenotazioni ricevute ai propri annunci
+				Una per le prenotazioni fatte ad altri annunci
+
+ModificaProfilo/aside:	si vedono le informazioni del proprio profilo finora valide
+
+ModificaProfilo/principale:	si modificano tali informazioni
+
+ModificaAnnuncio/aside:	si vedono le foto del proprio annuncio finora valide
+
+ModificaUtente/principale: si modificano tutte i campi dell'annuncio (tranne l'indirizzo)
+
+-------------------------------------------------------------------------------------------------------
+Istruzioni particolari:
+
+CreaAnnuncio: se nella creazione si vuole aggiungere più foto è utile ricordare che vanno tutte selezionate nell'input di file multiplo (che ne accetta al massimo 4)
+
+ModificaProfilo: se si vuole eliminare la foto profilo e non solo cambiarla bisogna spuntare la checkbox "Elimina foto" e non selezionare file
+
+ModificaAnnuncio: se si vuole fare un'operazione sulle foto basta premere il link "Modifica foto"
+		  se si vuole eliminare una qualche foto (non si può elimanre la principale, solo cambiarla) basta spuntare la checkbox relativa e non selezionare file

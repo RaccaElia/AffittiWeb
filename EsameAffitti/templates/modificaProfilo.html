@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{%block aside%}
+<h2 class="titolo">Il tuo vecchio profilo</h2>
+<h4 class="text-center mt-3">{{utente.nome}} {{utente.cognome}}</h4>
+{%if utente.imgProfilo == ''%}
+<img class="fotoUtente" src="{{url_for('static', filename = 'user.jpg')}}">
+{%else%}
+<img class="fotoUtente" src="{{url_for('static', filename = utente.imgProfilo)}}">
+{%endif%}
+<div class="text-center mt-3">
+    <p><em class="fw-semibold text-decoration-underline">Email:</em> {{utente.email}}</p>
+    {%if utente.dataNascita != ''%}
+    <p><em class="fw-semibold text-decoration-underline">Data di nascita:</em> {{utente.dataNascita[8:10]}}/{{utente.dataNascita[5:7]}}/{{utente.dataNascita[0:4]}}</p>
+    {%else%}
+    <p><em class="fw-semibold text-decoration-underline">Data di nascita:</em> gg/mm/aaaa</p>
+    {%endif%}
+</div>
+{%endblock%}
+{%block corpo%}
+<h2 class="titolo">Modifica i dati</h2>
+<form action="{{url_for('update_utente', id_utente = utente.id_utente)}}" method="post" id="modificaProfiloForm" enctype="multipart/form-data" class="p-2">
+    <div class="input-group">
+        <span class="input-group-text">Nome e cognome</span>
+        <input type="text" name="nome" id="nomeText" class="form-control" placeholder="{{utente.nome}}">
+        <input type="text" name="cognome" id="CognomeText" class="form-control" placeholder="{{utente.cognome}}">
+    </div>
+    <label for="emailInput" class="form-label mt-2">Nuova email</label>
+    <input type="email" class="form-control" name="email" id="emailInput" placeholder="{{utente.email}}">
+    <label for="passwordInput" class="form-label mt-2">Nuova password</label>
+    <input type="password" name="password" id="passwordInput" class="form-control">
+    <div class="mt-2 d-flex align-items-center">
+        <label for="fileFoto" class="form-label mt-2 col-2">Nuova foto profilo: </label>
+        <input type="file" class="col" id="fileFoto" name="imgProfilo" accept=".jpg, .jpeg, .png"/>
+        <input class="form-check-input col-2" type="checkbox" value="1" id="eliminaFotoCheck" name="eliminaFoto">
+        <label class="form-check-label ms-1 col-2" for="eliminaFotoCheck">Elimina foto profilo</label>
+    </div>
+    <label for="datePost" class="form-label mt-2">Seleziona la tua data di nascita: </label>
+    <input type="date" class="col-2" id="datePost" name="dataNascita" placeholder="{{utente.dataNascita}}">
+    <div class="mt-3">
+        <button type="reset" class="bottoneLogin">Cancella</button>
+        <button type="submit" class="bottoneLogin">Modifica</button>
+    </div>
+    
+</form>
+{%endblock%}

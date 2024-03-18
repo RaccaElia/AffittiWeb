@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{%block aside%}
+<h3 class="text-center">{{cliente.nome}} {{cliente.cognome}} {%if cliente.isProfessionista==1%}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
+    <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z"/>
+    <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z"/>
+  </svg>{%endif%}</h3>
+{%if cliente.imgProfilo == ''%}
+<img class="fotoUtente" src="{{url_for('static', filename = 'user.jpg')}}">
+{%else%}
+<img class="fotoUtente" src="{{url_for('static', filename = cliente.imgProfilo)}}">
+{%endif%}
+<div class="text-center mt-3">
+    <p><em class="fw-semibold text-decoration-underline">Email:</em> {{cliente.email}}</p>
+    {%if cliente.dataNascita != ''%}
+    <p><em class="fw-semibold text-decoration-underline">Data di nascita:</em> {{cliente.dataNascita[8:10]}}/{{cliente.dataNascita[5:7]}}/{{cliente.dataNascita[0:4]}}</p>
+    {%else%}
+    <p><em class="fw-semibold text-decoration-underline">Data di nascita:</em> gg/mm/aaaa</p>
+    {%endif%}
+</div>
+<div class="d-flex flex-row-reverse mt-5">
+    <button class="bottoneModifica"><a class="text-decoration-none text-reset" href="{{url_for('modifica_profilo', id = cliente.id_utente )}}">MODIFICA</a></button>
+</div>
+{%endblock%}
+{%block corpo%}
+<h2 class="titolo">Le tue prenotazioni</h2>
+{%for prenotazione in prenotazioni%}
+<article class="prenotazione mt-3">
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            {%if prenotazione.stato == 'accettata' %}
+            <h2 class="accordion-header">
+                <button class="accordion-button bg-success bg-opacity-25" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{prenotazione.id_prenotazione}}" aria-expanded="true" aria-controls="collapse{{prenotazione.id_prenotazione}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                      </svg> <strong>Informazioni sulla prenotazione</strong></button>
+            </h2>
+            {%endif%}
+            {%if prenotazione.stato == 'richiesta' %}
+            <h2 class="accordion-header">
+                <button class="accordion-button bg-warning bg-opacity-25" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{prenotazione.id_prenotazione}}" aria-expanded="true" aria-controls="collapse{{prenotazione.id_prenotazione}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history me-2" viewBox="0 0 16 16">
+                        <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z"/>
+                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"/>
+                        <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
+                      </svg> <strong>Informazioni sulla prenotazione</strong></button>
+            </h2>
+            {%endif%}
+            {%if prenotazione.stato == 'rifiutata' %}
+            <h2 class="accordion-header">
+                <button class="accordion-button bg-danger bg-opacity-25" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{prenotazione.id_prenotazione}}" aria-expanded="true" aria-controls="collapse{{prenotazione.id_prenotazione}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-x me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708"/>
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                      </svg> <strong>Informazioni sulla prenotazione</strong></button>
+            </h2>
+            {%endif%}
+            <div id="collapse{{prenotazione.id_prenotazione}}" class="accordion-collapse collapse show">
+                <div class="accordion-body row">
+                    <section class="col-lg-6 col-sm-12">
+                        <p><em class="fw-semibold text-decoration-underline">Stato:</em> {{prenotazione.stato}}</p>
+                        <p><em class="fw-semibold text-decoration-underline">Data:</em> {{prenotazione.data}}</p>
+                        {%if prenotazione.orario == 1%}
+                        <p><em class="fw-semibold text-decoration-underline">Orario:</em> 9-12</p>
+                        {%endif%}
+                        {%if prenotazione.orario == 2%}
+                        <p><em class="fw-semibold text-decoration-underline">Orario:</em> 12-14</p>
+                        {%endif%}
+                        {%if prenotazione.orario == 3%}
+                        <p><em class="fw-semibold text-decoration-underline">Orario:</em> 14-17</p>
+                        {%endif%}
+                        {%if prenotazione.orario == 4%}
+                        <p><em class="fw-semibold text-decoration-underline">Orario:</em> 17-20</p>
+                        {%endif%}
+                        {%if prenotazione.modalita == 0%}
+                        <p><em class="fw-semibold text-decoration-underline">Modalità:</em> di persona</p>
+                        {%endif%}
+                        {%if prenotazione.modalita == 1%}
+                        <p><em class="fw-semibold text-decoration-underline">Modalità:</em> da remoto</p>
+                        {%endif%}
+                    </section>
+                    <section class="col">
+                        {%if prenotazione.stato == 'rifiutata' %}
+                        <p><em class="fw-semibold text-decoration-underline">Motivo del rifiuto:</em></p>
+                        <textarea readonly>{{prenotazione.motivoRifiuto}}</textarea>
+                        {%endif%}
+                    </section>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo{{prenotazione.id_prenotazione}}" aria-expanded="false" aria-controls="collapseTwo{{prenotazione.id_prenotazione}}">
+                <strong>Informazioni sull'immobile</strong></button>
+            </h2>
+            <div id="collapseTwo{{prenotazione.id_prenotazione}}" class="accordion-collapse collapse">
+                <a class="text-decoration-none text-reset" href="{{url_for('show_annuncio', id = prenotazione.id_annuncio, giorno ='null' )}}">
+                <div class="accordion-body">
+                    <p><em class="fw-semibold text-decoration-underline">Titolo:</em> {{prenotazione.titolo}}</p>
+                    <p><em class="fw-semibold text-decoration-underline">Indirizzo:</em> {{prenotazione.indirizzo}}</p>
+                    <p><em class="fw-semibold text-decoration-underline">Descrizione:</em> {{prenotazione.descrizione}}</p>
+                    <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+                      </svg> <small>{{prenotazione.tipoCasa}}</small></p>
+                </div></a>
+            </div>
+        </div>
+    </div>
+</article>
+{%endfor%}
+{%endblock%}
